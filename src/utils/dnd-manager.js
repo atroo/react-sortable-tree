@@ -74,15 +74,19 @@ export default class DndManager {
       dragSourceInitialDepth = 0;
 
       if (component) {
-        const relativePosition = findDOMNode(component).getBoundingClientRect(); // eslint-disable-line react/no-find-dom-node
-        const leftShift =
-          monitor.getSourceClientOffset().x - relativePosition.left;
-        blocksOffset = Math.round(
-          leftShift / dropTargetProps.scaffoldBlockPxWidth
-        );
+        try {
+          const relativePosition = reactDom.findDOMNode(component).getBoundingClientRect();
+          const leftShift = monitor.getSourceClientOffset().x - relativePosition.left;
+          blocksOffset = Math.round(leftShift / dropTargetProps.scaffoldBlockPxWidth);
+        } catch (err) {
+          console.log(err);
+          blocksOffset = dropTargetProps.path.length;
+        }
       } else {
         blocksOffset = dropTargetProps.path.length;
       }
+
+      
     } else {
       // handle row direction support
       const direction = dropTargetProps.rowDirection === 'rtl' ? -1 : 1;
