@@ -65,7 +65,7 @@
     "> 1%"
   ],
   "dependencies": {
-    "frontend-collective-react-dnd-scrollzone": "git://github.com/atroo/frontend-collective-react-dnd-scrollzone#cee920fd1f491f617c2a950e9dc050d088ae2513",
+    "atroo-frontend-collective-react-dnd-scrollzone": "1.0.2",
     "lodash.isequal": "^4.5.0",
     "prop-types": "^15.6.1",
     "react-dnd": "^11.1.3",

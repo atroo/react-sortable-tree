@@ -2,7 +2,7 @@ import withScrolling, {
   createHorizontalStrength,
   createScrollingComponent,
   createVerticalStrength,
-} from 'frontend-collective-react-dnd-scrollzone';
+} from 'atroo-frontend-collective-react-dnd-scrollzone';
 import isEqual from 'lodash.isequal';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
