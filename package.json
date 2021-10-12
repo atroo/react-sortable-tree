@@ -1,6 +1,6 @@
 {
   "name": "atroo-react-sortable-tree",
-  "version": "2.8.0",
+  "version": "2.8.1",
   "description": "Drag-and-drop sortable component for nested data and hierarchies",
   "scripts": {
     "prebuild": "yarn run lint && yarn run clean",
@@ -65,7 +65,7 @@
     "> 1%"
   ],
   "dependencies": {
-    "atroo-frontend-collective-react-dnd-scrollzone": "1.0.2",
+    "atroo-frontend-collective-react-dnd-scrollzone": "1.0.3",
     "lodash.isequal": "^4.5.0",
     "prop-types": "^15.6.1",
     "react-dnd": "^11.1.3",

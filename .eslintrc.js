@@ -6,6 +6,9 @@ module.exports = {
     jest: true,
   },
   rules: {
+    'no-unused-vars': 0,
+    'react/no-find-dom-node': 0,
+    'no-undef': 0,
     'react/destructuring-assignment': 0,
     'react/jsx-filename-extension': 0,
     'react/prefer-stateless-function': 0,
