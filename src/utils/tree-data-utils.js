@@ -888,6 +888,7 @@ function addNodeAtDepthAndIndex({
  * @return {Object} result.parentNode - The parent node of the inserted node
  */
 export function insertNode({
+  newParentPath,
   treeData,
   depth: targetDepth,
   minimumTreeIndex,
@@ -905,6 +906,49 @@ export function insertNode({
     };
   }
 
+  if (newParentPath) {
+    try {
+      const insertedUnderParentResult = addNodeUnderParent({
+        treeData,
+        newNode,
+        parentKey: newParentPath[newParentPath.length - 1],
+        getNodeKey,
+        ignoreCollapsed,
+        expandParent: true,
+      });
+
+      const newPath = [
+        ...newParentPath,
+        getNodeKey({
+          node: newNode,
+          treeIndex: insertedUnderParentResult.treeIndex,
+        }),
+      ];
+
+      return {
+        treeData: insertedUnderParentResult.treeData,
+        treeIndex: insertedUnderParentResult.treeIndex,
+        path: newPath,
+        parentNode: getNodeAtPath({
+          treeData: insertedUnderParentResult.treeData,
+          path: newPath,
+          getNodeKey,
+          ignoreCollapsed,
+        }),
+      };
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log({
+        error,
+        treeData,
+        newNode,
+        newParentPath,
+      });
+
+      return null;
+    }
+  }
+
   const insertResult = addNodeAtDepthAndIndex({
     targetDepth,
     minimumTreeIndex,
@@ -918,6 +962,9 @@ export function insertNode({
     currentIndex: -1,
     currentDepth: -1,
   });
+
+  // eslint-disable-next-line no-console
+  console.log('insertedResult: ', insertResult);
 
   if (!('insertedTreeIndex' in insertResult)) {
     throw new Error('No suitable position found to insert.');

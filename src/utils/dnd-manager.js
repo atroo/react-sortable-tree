@@ -12,10 +12,6 @@ export default class DndManager {
     return this.treeRef.startDrag;
   }
 
-  get dragHover() {
-    return this.treeRef.dragHover;
-  }
-
   get endDrag() {
     return this.treeRef.endDrag;
   }
@@ -75,9 +71,14 @@ export default class DndManager {
 
       if (component) {
         try {
-          const relativePosition = reactDom.findDOMNode(component).getBoundingClientRect();
-          const leftShift = monitor.getSourceClientOffset().x - relativePosition.left;
-          blocksOffset = Math.round(leftShift / dropTargetProps.scaffoldBlockPxWidth);
+          const relativePosition = reactDom
+            .findDOMNode(component)
+            .getBoundingClientRect();
+          const leftShift =
+            monitor.getSourceClientOffset().x - relativePosition.left;
+          blocksOffset = Math.round(
+            leftShift / dropTargetProps.scaffoldBlockPxWidth
+          );
         } catch (err) {
           console.log(err);
           blocksOffset = dropTargetProps.path.length;
@@ -85,8 +86,6 @@ export default class DndManager {
       } else {
         blocksOffset = dropTargetProps.path.length;
       }
-
-      
     } else {
       // handle row direction support
       const direction = dropTargetProps.rowDirection === 'rtl' ? -1 : 1;
@@ -138,6 +137,7 @@ export default class DndManager {
     if (typeof this.customCanDrop === 'function') {
       const { node } = monitor.getItem();
       const addedResult = memoizedInsertNode({
+        newParentPath: dropTargetProps.path,
         treeData: this.treeData,
         newNode: node,
         depth: targetDepth,
@@ -145,6 +145,10 @@ export default class DndManager {
         minimumTreeIndex: dropTargetProps.listIndex,
         expandParent: true,
       });
+
+      if (!addedResult) {
+        return false;
+      }
 
       return this.customCanDrop({
         node,
@@ -206,6 +210,7 @@ export default class DndManager {
     const nodeDropTarget = {
       drop: (dropTargetProps, monitor, component) => {
         const result = {
+          newParentPath: dropTargetProps.path,
           node: monitor.getItem().node,
           path: monitor.getItem().path,
           treeIndex: monitor.getItem().treeIndex,
@@ -217,35 +222,6 @@ export default class DndManager {
         this.drop(result);
 
         return result;
-      },
-
-      hover: (dropTargetProps, monitor, component) => {
-        const targetDepth = this.getTargetDepth(
-          dropTargetProps,
-          monitor,
-          component
-        );
-        const draggedNode = monitor.getItem().node;
-        const needsRedraw =
-          // Redraw if hovered above different nodes
-          dropTargetProps.node !== draggedNode ||
-          // Or hovered above the same node but at a different depth
-          targetDepth !== dropTargetProps.path.length - 1;
-
-        if (!needsRedraw) {
-          return;
-        }
-
-        // throttle `dragHover` work to available animation frames
-        cancelAnimationFrame(this.rafId);
-        this.rafId = requestAnimationFrame(() => {
-          this.dragHover({
-            node: draggedNode,
-            path: monitor.getItem().path,
-            minimumTreeIndex: dropTargetProps.listIndex,
-            depth: targetDepth,
-          });
-        });
       },
 
       canDrop: this.canDrop.bind(this),

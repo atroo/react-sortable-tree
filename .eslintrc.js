@@ -6,6 +6,7 @@ module.exports = {
     jest: true,
   },
   rules: {
+    'import/no-cycle': ['error', { maxDepth: Infinity }],
     'no-unused-vars': 0,
     'react/no-find-dom-node': 0,
     'no-undef': 0,
