@@ -3037,8 +3037,10 @@ atob@^2.1.1:
   resolved "https://registry.npmjs.org/atob/-/atob-2.1.2.tgz"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-"atroo-frontend-collective-react-dnd-scrollzone@file:../frontend-collective-react-dnd-scrollzone":
+atroo-frontend-collective-react-dnd-scrollzone@1.0.4:
   version "1.0.4"
+  resolved "https://registry.yarnpkg.com/atroo-frontend-collective-react-dnd-scrollzone/-/atroo-frontend-collective-react-dnd-scrollzone-1.0.4.tgz#0bf23f4d95dc64f230f1300a165565ae47dc9802"
+  integrity sha512-eZQBmZb7aY2zMd8/E86YJN1euMro2XBvDRrX9RVGglzNVXe7d4izRMht5PUw25eXpsSMwXCtvvs7OU9zxmvXMQ==
   dependencies:
     hoist-non-react-statics "^3.1.0"
     lodash.throttle "^4.0.1"
